@@ -82,7 +82,7 @@ class MisionController extends Controller
 				"urgente" => $mision->urgente,
 				"pago acordado" => $mision->pago,
 				"estado" => $mision->estado,
-				"fecha_finalizacion" => $fecha_finalizacion,
+				"fecha_finalizacion" => $mision->fecha_finalizacion,
 				"ninjas asignados" => $asignaciones,
 				];
 
@@ -134,17 +134,4 @@ class MisionController extends Controller
 		}
 		return $busqueda;
 	}
-
-
-	/*        Schema::create('misions', function (Blueprint $table) {
-            $table->id();
-            $table->text('descripcion');
-            $table->foreignId('cliente_id');
-            $table->unsignedInteger('numero_ninjas');
-            $table->boolean('urgente');
-            $table->text('pago');
-            $table->enum('estado', ['Pendiente', 'En Curso', 'Completado', 'Fallado']);
-            $table->date('fecha_finalizacion');
-            $table->timestamps();
-        });*/
 }
