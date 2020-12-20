@@ -22,7 +22,8 @@ Route::prefix('ninjas')->group(function () {
 	Route::post('/registrar',[NinjaController::class,"registrarNinja"]);
 	Route::post('/baja/{id}',[NinjaController::class,"bajaNinja"]);
 	Route::get('/ninja/{id}',[NinjaController::class,"verNinja"]);
-	Route::get('/filtrar', [NinjaController::class, "filtrarNinja"]);
+	Route::get('/filtrar/{nombre}', [NinjaController::class, "filtrarNombre"]);
+    Route::get('/filtrar/{estado}', [NinjaController::class, "filtrarEstado"]);
 	Route::get('/', [NinjaController::class, "listaNinjas"]);
 });
 

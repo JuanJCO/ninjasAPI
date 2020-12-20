@@ -77,16 +77,17 @@ class MisionController extends Controller
 			
 			$datosMision = [	
 				"ID" => $mision->id,
-				"VIP" => $mision->VIP,
-				"codigo_secreto" => $mision->codigo_secreto,
-				"fecha_registro" => $mision->created_at,
-				"ninjas_asignados" => $asignaciones,
+				"descripcion" => $mision->descripcion,
+				"numero_ninjas" => $mision->numero_ninjas,
+				"urgente" => $mision->urgente,
+				"pago acordado" => $mision->pago,
+				"estado" => $mision->estado,
+				"fecha_finalizacion" => $fecha_finalizacion,
+				"ninjas asignados" => $asignaciones,
 				];
 
 			return response()->json($datosMision);		
 		}		
 		return response("Cliente no encontrado.");
-	}
-	
-
+	}	
 }

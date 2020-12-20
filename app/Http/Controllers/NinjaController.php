@@ -66,24 +66,27 @@ class NinjaController extends Controller
 
 			$asignaciones = [];
 
-			foreach ($ninja->asignaciones as $asignacion){
+			foreach ($ninja->asignaciones as $asignacion) {
 				$asignaciones[] = [
-
+				"mision_id" => $asignacion->mision_id,
+				"mision_nombre" => $asignacion->mision->nombre,
+				"mision_fecha" => $asignacion->mision->created_at,
+				"mision_estado" => $asignacion->mision->estado,
 				];
-			} 
-				
-					"Id" => $ninja->id,
-					"Nombre" => $ninja->nombre,
-					"Rango" => $ninja->rango,
-					"Habilidades" => $ninja->habilidades,
-					"Estado" => $ninja->estado,
-					"Fecha Registro" => $ninja->created_at,
-				
-			);
-		}
+			};
+			
+			$datosNinja = [	
+				"ID" => $ninja->id,
+				"nombre" => $ninja->nombre,
+				"rango" => $ninja->rango,
+				"habilidades" => $ninja->habilidades,
+				"estado" => $ninja->estado,
+				"misiones_asignadas" => $asignaciones,
+				];
 
-
-		return response("Ninja no encontrado");
+			return response()->json($datosNinja);		
+		}		
+		return response("Cliente no encontrado.");
 	}
 
 	//Muestra el listado de todos los ninjas con la información relevante
@@ -111,31 +114,42 @@ class NinjaController extends Controller
         //FILTRO NOMBRE Y ESTADO 
 	}
 
-	//Filtrar por Nombre y Estado
-	public function filtrarNinja(Request $request){
 
-        $ninjaClass = Ninja::class;
+	public function filtrarNombre($nombre){
 
+		$ninjas = Ninja::all();
+		$busqueda = [];
 
-        if($request->request->get('nombre')){
-            $ninjaClass = $ninjaClass::where('nombre', 'like', '%' . $request->request->get('nombre') . '%');
-        }
-        if($request->request->get('estado')){
-            $ninjaClass = $ninjaClass::where('estado', $request->request->get('estado'));
-        }
+		foreach($ninjas as $ninja) {
 
-    	$ninjas = $ninjaClass->get();
+				if ($ninja->nombre == $nombre){
+					$busqueda[] = [
+						"nombre" => $ninja->nombre,
+						"rango" => $ninja->rango,
+						"habilidades" => $ninja->habilidades,
+						"estado" => $ninja->estado,
+					];
+				}
+		}
+		return $busqueda;
+	}
 
-        $resultado = [];
+	public function filtrarEstado($estado){
+		
+		$ninjas = Ninja::all();
+		$busqueda = [];
 
-        foreach ($ninjas as $ninja) {
-            $resultado[] = [
-                "nombre" => $ninja->nombre,
-                "fecha_registro" => $ninja->created_at,
-                "rango" => $ninja->rango,
-                "estado" => $ninja->estado
-            ];
-        }
-        return response()->json($resultado);
-    }
+		foreach($ninjas as $ninja) {
+
+				if ($ninja->estado == $estado){
+					$busqueda[] = [
+						"nombre" => $ninja->nombre,
+						"rango" => $ninja->rango,
+						"habilidades" => $ninja->habilidades,
+						"estado" => $ninja->estado,
+					];
+				}
+		}
+		return $busqueda;
+	}
 }
