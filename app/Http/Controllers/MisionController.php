@@ -40,7 +40,7 @@ class MisionController extends Controller
 
 	public function listaMisiones(){
 
-		$misiones = Mision::all();
+		$misiones = Mision::orderBy('Urgente','DESC')->orderBy('created_at','ASC')->get();
         $resultado = [];
 
         foreach ($misiones as $mision) {
@@ -90,4 +90,61 @@ class MisionController extends Controller
 		}		
 		return response("Cliente no encontrado.");
 	}	
+
+	public function filtrarEstado($estado){
+
+		$misiones = Mision::orderBy('Urgente','DESC')->orderBy('created_at','ASC')->get();
+		$busqueda = [];
+
+		foreach($misiones as $mision) {
+
+				if ($mision->estado == $estado){
+					$busqueda[] = [
+						"nombre" => $mision->id,
+						"cliente_id" => $mision->cliente_id,
+						"numero_ninjas" => $mision->numero_ninjas,
+						"prioridad" => $mision->urgente,
+						"estado" => $mision->estado,
+						"fecha_finalizacion" => $mision->fecha_finalizacion,
+						"fecha_registrio" => $mision->created_at
+					];
+				}
+		}
+		return $busqueda;
+	}
+
+	public function filtrarCodigoCliente($clienteId){
+
+		$misiones = Mision::orderBy('Urgente','DESC')->orderBy('created_at','ASC')->get();
+		$busqueda = [];
+
+		foreach($misiones as $mision) {
+
+				if ($mision->cliente_id == $clienteId){
+					$busqueda[] = [
+						"nombre" => $mision->id,
+						"cliente_id" => $mision->cliente_id,
+						"numero_ninjas" => $mision->numero_ninjas,
+						"prioridad" => $mision->urgente,
+						"estado" => $mision->estado,
+						"fecha_finalizacion" => $mision->fecha_finalizacion,
+						"fecha_registrio" => $mision->created_at
+					];
+				}
+		}
+		return $busqueda;
+	}
+
+
+	/*        Schema::create('misions', function (Blueprint $table) {
+            $table->id();
+            $table->text('descripcion');
+            $table->foreignId('cliente_id');
+            $table->unsignedInteger('numero_ninjas');
+            $table->boolean('urgente');
+            $table->text('pago');
+            $table->enum('estado', ['Pendiente', 'En Curso', 'Completado', 'Fallado']);
+            $table->date('fecha_finalizacion');
+            $table->timestamps();
+        });*/
 }

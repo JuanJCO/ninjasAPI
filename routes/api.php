@@ -22,24 +22,23 @@ Route::prefix('ninjas')->group(function () {
 	Route::post('/registrar',[NinjaController::class,"registrarNinja"]);
 	Route::post('/baja/{id}',[NinjaController::class,"bajaNinja"]);
 	Route::get('/ninja/{id}',[NinjaController::class,"verNinja"]);
-	Route::get('/filtrar/{nombre}', [NinjaController::class, "filtrarNombre"]);
-    Route::get('/filtrar/{estado}', [NinjaController::class, "filtrarEstado"]);
+	Route::get('/filtrarNombre/{nombre}', [NinjaController::class, "filtrarNombre"]);
+    Route::get('/filtrarEstado/{estado}', [NinjaController::class, "filtrarEstado"]);
 	Route::get('/', [NinjaController::class, "listaNinjas"]);
 });
 
 Route::prefix('clientes')->group(function () {
     Route::post('/registrar',[ClienteController::class,"registrarCliente"]);
-    Route::post('/editar/{id}',[ClienteController::class,"editarCliente"]);
     Route::get('/cliente/{id}',[ClienteController::class,"verCliente"]);
     Route::get('/',[ClienteController::class,"listaClientes"]);
 });
 
 Route::prefix('misiones')->group(function () {
     Route::post('/registrar',[MisionController::class,"registrarMision"]);
-    Route::post('/editar/{id}',[MisionController::class,"editarMision"]);
     Route::get('/mision/{id}',[MisionController::class,"verMision"]);
     Route::get('/',[MisionController::class,"listaMisiones"]);
-    Route::get('/filtro',[MisionController::class,"filtroMision"]);
+    Route::get('/filtrarEstado/{estado}', [MisionController::class, "filtrarEstado"]);
+    Route::get('/filtrarCliente/{clienteId}', [MisionController::class, "filtrarCodigoCliente"]);
 });
 
 Route::prefix('asignaciones')->group(function () {

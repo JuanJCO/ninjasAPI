@@ -105,15 +105,7 @@ class NinjaController extends Controller
             ];
         }
         return response()->json($resultado);
-
-        //FILTRO NOMBRE Y ESTADO 
-        //FILTRO NOMBRE Y ESTADO 
-        //FILTRO NOMBRE Y ESTADO 
-        //FILTRO NOMBRE Y ESTADO 
-        //FILTRO NOMBRE Y ESTADO 
-        //FILTRO NOMBRE Y ESTADO 
 	}
-
 
 	public function filtrarNombre($nombre){
 
@@ -135,7 +127,7 @@ class NinjaController extends Controller
 	}
 
 	public function filtrarEstado($estado){
-		
+
 		$ninjas = Ninja::all();
 		$busqueda = [];
 
